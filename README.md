@@ -55,7 +55,7 @@ AI 글쓰기 도구는 대개 메모에서 초안으로 곧장 건너뛴다. 무
 
 ## 출력 언어
 
-장 노트 frontmatter에 `lang: ru`를 적어 두면 그 장의 비트·초안·퇴고가 러시아어로 나온다. 한국어와 러시아어로 함께 쓰는 공저를 위한 기능이다. 비워 두면 한국어다.
+한국어가 기본이다. 장 노트 frontmatter에 `lang: ru`를 적으면 그 장만 비트·초안·퇴고를 러시아어로 쓴다. 한국어와 러시아어를 함께 쓰는 공저, 이를테면 고려인 디아스포라 기록 같은 작업을 위해 둔 기능이다. 비워 두면 한국어로 나온다.
 
 ## 범용성
 
@@ -69,7 +69,7 @@ MIT — `LICENSE` 참조.
 
 ## English summary
 
-**An Obsidian writing pipeline that treats your vault as a book's "work state" and advances it stage by stage** (outline → research → beats → draft → revision → manuscript). The AI only *proposes*; you approve; every sentence is traced back to its source — it never fabricates.
+**An Obsidian writing pipeline that treats your vault as a book's "work state" and advances it stage by stage** (outline → research → beats → draft → revision → manuscript). The AI only *proposes*; you approve; every sentence is traced back to its source — it never fabricates. The interface and prompts are Korean, and output is Korean by default; a chapter can be set to Russian (`lang: ru`) for bilingual co-authoring.
 
 Grounding is enforced three ways: whitelist context (only the chapter's linked research cards), no-source-no-save, and year/proper-noun flags for anything not present in the source cards. Unresolved flags are carried forward to the final manuscript's "확인 필요" (needs-check) section rather than silently dropped.
 

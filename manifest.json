@@ -3,7 +3,7 @@
   "name": "Oh My Wiki Pipeline",
   "version": "0.1.0",
   "minAppVersion": "1.5.0",
-  "description": "Source-grounded, stage-by-stage AI writing for books. Advance your vault through research, beats, draft, revision, and manuscript — the AI proposes, you approve, and every sentence traces back to a source.",
+  "description": "Source-grounded, stage-by-stage AI writing for Korean nonfiction books. Advance your vault through research, beats, draft, revision, and manuscript — the AI proposes, you approve, and every sentence traces back to a source.",
   "author": "원성묵 (Seongmuk Won)",
   "authorUrl": "https://wiki.jachiai.kr",
   "isDesktopOnly": true
