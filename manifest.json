@@ -3,7 +3,8 @@
   "name": "Oh My Wiki Pipeline",
   "version": "0.1.0",
   "minAppVersion": "1.5.0",
-  "description": "위키를 책의 작업 상태로 삼아 글을 단계마다 밀고 나가는 Obsidian 글쓰기 파이프라인. 초안은 AI가, 채택은 사람이 한다. 모든 문장이 출처로 이어져 없는 사실을 지어내지 않는다.",
-  "author": "원성묵",
+  "description": "Source-grounded, stage-by-stage AI writing for books. Advance your vault through research, beats, draft, revision, and manuscript — the AI proposes, you approve, and every sentence traces back to a source.",
+  "author": "원성묵 (Seongmuk Won)",
+  "authorUrl": "https://wiki.jachiai.kr",
   "isDesktopOnly": true
 }
