@@ -1,0 +1,129 @@
+.omw-beat-modal .modal {
+  width: min(680px, 90vw);
+}
+
+.omw-beat-modal h2 {
+  margin-bottom: 4px;
+}
+
+.omw-beat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 52vh;
+  overflow-y: auto;
+  margin: 12px 0;
+  padding-right: 4px;
+}
+
+.omw-beat-row {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--background-secondary);
+}
+
+.omw-beat-row.omw-beat-flagged {
+  border-color: var(--text-warning, #e0a800);
+}
+
+.omw-beat-row.omw-beat-rejected {
+  opacity: 0.55;
+}
+
+.omw-beat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.omw-beat-header input[type='checkbox'] {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+}
+
+.omw-beat-title {
+  flex: 1 1 auto;
+  font-weight: 600;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 5px 9px;
+  color: var(--text-normal);
+}
+
+.omw-beat-header button {
+  flex: 0 0 auto;
+  padding: 3px 9px;
+}
+
+.omw-beat-blocked {
+  flex: 0 0 auto;
+  font-size: 0.72em;
+  font-weight: 700;
+  color: var(--text-on-accent, #fff);
+  background: var(--text-error, #c0392b);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.omw-beat-line {
+  width: 100%;
+  margin-top: 8px;
+  resize: vertical;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 6px 9px;
+  color: var(--text-normal);
+  font: inherit;
+}
+
+.omw-beat-sources {
+  margin-top: 6px;
+  font-size: 0.85em;
+  color: var(--text-muted);
+}
+
+.omw-manuscript-para {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  color: var(--text-normal);
+}
+
+.omw-beat-flag {
+  margin-top: 4px;
+  font-size: 0.85em;
+  color: var(--text-error, #c0392b);
+}
+
+.omw-beat-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.omw-beat-feedback label {
+  font-size: 0.85em;
+  color: var(--text-muted);
+}
+
+.omw-beat-feedback-input {
+  width: 100%;
+  resize: vertical;
+  background: var(--background-primary);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  padding: 6px 9px;
+  color: var(--text-normal);
+  font: inherit;
+}
+
+.omw-beat-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}

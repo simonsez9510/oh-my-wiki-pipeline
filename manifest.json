@@ -1,0 +1,9 @@
+{
+  "id": "oh-my-wiki-pipeline",
+  "name": "Oh My Wiki Pipeline",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "위키를 책의 작업 상태로 삼아 자료조사→비트→초안→퇴고→원고를 단계별로 전진시키는 그라운디드 글쓰기 파이프라인. AI는 제안만, 사람이 승인, 모든 문장은 출처로 추적.",
+  "author": "원성묵",
+  "isDesktopOnly": true
+}
