@@ -38,7 +38,7 @@ AI 글쓰기 도구는 대개 메모에서 초안으로 곧장 건너뛴다. 무
 ## 요구사항
 
 - Obsidian 1.5+ (데스크톱 전용 — Anthropic API를 직접 부른다)
-- 본인 Anthropic API 키 ([console.anthropic.com](https://console.anthropic.com))
+- 본인 Anthropic API 키 ([console.anthropic.com](https://console.anthropic.com)) — 사용한 만큼 Anthropic에 과금됩니다(보통 소액). 플러그인 자체는 무료·오픈소스입니다.
 
 ## 설치 (베타 — BRAT)
 
