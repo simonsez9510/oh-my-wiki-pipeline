@@ -20,9 +20,9 @@ import type { Beat, ResearchCard } from '../ai/beats';
 
 const beat = (overrides: Partial<Beat> = {}): Beat => ({
   title: '안산 도착',
-  line: '김올가 어르신이 안산역에 내린다.',
+  line: '김가원 어르신이 안산역에 내린다.',
   quote: '안산에 도착했다.',
-  sources: ['인물 — 김올가', '인터뷰 — 김올가 20260601'],
+  sources: ['인물 — 김가원', '인터뷰 — 김가원 20260601'],
   flags: [],
   blocking: false,
   ...overrides
@@ -31,18 +31,18 @@ const beat = (overrides: Partial<Beat> = {}): Beat => ({
 describe('buildBeatNoteContent', () => {
   it('writes stage/mode/status frontmatter and a quoted chapter wikilink', () => {
     const content = buildBeatNoteContent(beat(), '3장 — 안산 정착', [
-      '인물 — 김올가',
-      '인터뷰 — 김올가 20260601'
+      '인물 — 김가원',
+      '인터뷰 — 김가원 20260601'
     ]);
     expect(content).toContain('stage: 비트');
     expect(content).toContain('status: 승인');
     expect(content).toContain('chapter: "[[3장 — 안산 정착]]"');
-    expect(content).toContain('  - "[[인물 — 김올가]]"');
+    expect(content).toContain('  - "[[인물 — 김가원]]"');
   });
 
   it('uses the provided canonical source links, not the raw beat titles', () => {
-    const content = buildBeatNoteContent(beat(), '3장', ['카드/인물 — 김올가']);
-    expect(content).toContain('  - "[[카드/인물 — 김올가]]"');
+    const content = buildBeatNoteContent(beat(), '3장', ['카드/인물 — 김가원']);
+    expect(content).toContain('  - "[[카드/인물 — 김가원]]"');
   });
 
   it('serializes empty sources/flags as an inline empty list', () => {
@@ -54,7 +54,7 @@ describe('buildBeatNoteContent', () => {
 
   it('renders a 확인 필요 block when flags exist', () => {
     const content = buildBeatNoteContent(beat({ flags: ['원문에 없는 연도(1937) — 사실 확인 필요'] }), '3장', [
-      '인물 — 김올가'
+      '인물 — 김가원'
     ]);
     expect(content).toContain('## 확인 필요');
     expect(content).toContain('1937');
@@ -62,7 +62,7 @@ describe('buildBeatNoteContent', () => {
 });
 
 describe('stripFrontmatter / extractSection / toResearchCard', () => {
-  const md = '---\npage_type: wiki_card\n---\n\n## 요약\n안산에 정착한 어르신.\n\n## 원문 근거\n1938년 출생.\n';
+  const md = '---\npage_type: wiki_card\n---\n\n## 요약\n안산에 정착한 어르신.\n\n## 원문 근거\n1935년 출생.\n';
 
   it('removes the frontmatter block', () => {
     expect(stripFrontmatter(md).startsWith('## 요약')).toBe(true);
@@ -70,14 +70,14 @@ describe('stripFrontmatter / extractSection / toResearchCard', () => {
 
   it('extracts a named section body', () => {
     expect(extractSection(md, '요약')).toBe('안산에 정착한 어르신.');
-    expect(extractSection(md, '원문 근거')).toBe('1938년 출생.');
+    expect(extractSection(md, '원문 근거')).toBe('1935년 출생.');
   });
 
   it('builds a research card with its path', () => {
-    const card = toResearchCard('인물 — 김올가', '카드/인물 — 김올가.md', md);
-    expect(card.path).toBe('카드/인물 — 김올가.md');
+    const card = toResearchCard('인물 — 김가원', '카드/인물 — 김가원.md', md);
+    expect(card.path).toBe('카드/인물 — 김가원.md');
     expect(card.summary).toBe('안산에 정착한 어르신.');
-    expect(card.evidence).toBe('1938년 출생.');
+    expect(card.evidence).toBe('1935년 출생.');
   });
 });
 
@@ -254,16 +254,16 @@ describe('disambiguateCardTitles', () => {
     const result = disambiguateCardTitles([
       card('인터뷰', '자료/A/인터뷰.md'),
       card('인터뷰', '자료/B/인터뷰.md'),
-      card('인물 — 김올가', '자료/인물 — 김올가.md')
+      card('인물 — 김가원', '자료/인물 — 김가원.md')
     ]);
-    expect(result.map((c) => c.title)).toEqual(['인터뷰 (자료/A)', '인터뷰 (자료/B)', '인물 — 김올가']);
+    expect(result.map((c) => c.title)).toEqual(['인터뷰 (자료/A)', '인터뷰 (자료/B)', '인물 — 김가원']);
   });
 });
 
 describe('extractWikiLink / extractWikiLinks', () => {
   it('extracts the linktext, dropping any alias', () => {
-    expect(extractWikiLink('"[[인물 — 김올가]]"')).toBe('인물 — 김올가');
-    expect(extractWikiLink('[[카드/인물|김올가]]')).toBe('카드/인물');
+    expect(extractWikiLink('"[[인물 — 김가원]]"')).toBe('인물 — 김가원');
+    expect(extractWikiLink('[[카드/인물|김가원]]')).toBe('카드/인물');
   });
 
   it('returns null when there is no wikilink', () => {
@@ -271,19 +271,19 @@ describe('extractWikiLink / extractWikiLinks', () => {
   });
 
   it('extracts every link when a value holds more than one', () => {
-    expect(extractWikiLinks('[[인물 — 김올가]] [[인터뷰 — 김올가 20260601]]')).toEqual([
-      '인물 — 김올가',
-      '인터뷰 — 김올가 20260601'
+    expect(extractWikiLinks('[[인물 — 김가원]] [[인터뷰 — 김가원 20260601]]')).toEqual([
+      '인물 — 김가원',
+      '인터뷰 — 김가원 20260601'
     ]);
     expect(extractWikiLinks('링크 없음')).toEqual([]);
   });
 });
 
 describe('parseBeatNote', () => {
-  const note = '---\nstage: 비트\n---\n\n# 안산역 도착\n\n김올가가 안산역에 내린다.\n\n## 출처\n- [[인물 — 김올가]]\n';
+  const note = '---\nstage: 비트\n---\n\n# 안산역 도착\n\n김가원가 안산역에 내린다.\n\n## 출처\n- [[인물 — 김가원]]\n';
 
   it('reads the title (H1) and line (first body paragraph)', () => {
-    expect(parseBeatNote(note, '비트 — 안산역 도착')).toEqual({ title: '안산역 도착', line: '김올가가 안산역에 내린다.' });
+    expect(parseBeatNote(note, '비트 — 안산역 도착')).toEqual({ title: '안산역 도착', line: '김가원가 안산역에 내린다.' });
   });
 
   it('falls back to the basename (minus prefix) when there is no H1', () => {
@@ -295,8 +295,8 @@ describe('parseBeatNote', () => {
 
 describe('buildDraftNoteContent', () => {
   const sections = [
-    { prose: '김올가가 안산역 계단을 내려온다.', beatLink: '비트 — 안산역 도착', sourceLinks: ['인물 — 김올가'], flags: [] },
-    { prose: '그는 화물열차의 기억을 떠올린다.', beatLink: '비트 — 강제이주 회상', sourceLinks: ['인터뷰 — 김올가 20260601'], flags: ['비트·카드에 없는 연도(1945) — 사실 확인 필요'] }
+    { prose: '김가원가 안산역 계단을 내려온다.', beatLink: '비트 — 안산역 도착', sourceLinks: ['인물 — 김가원'], flags: [] },
+    { prose: '그는 화물열차의 기억을 떠올린다.', beatLink: '비트 — 강제이주 회상', sourceLinks: ['인터뷰 — 김가원 20260601'], flags: ['비트·카드에 없는 연도(1945) — 사실 확인 필요'] }
   ];
 
   it('writes stage:초안 frontmatter with a unioned source list', () => {
@@ -305,13 +305,13 @@ describe('buildDraftNoteContent', () => {
     expect(content).toContain('page_type: draft');
     expect(content).toContain('chapter: "[[3장 — 안산 정착]]"');
     expect(content).toContain('  - "[[비트 — 안산역 도착]]"');
-    expect(content).toContain('  - "[[인물 — 김올가]]"');
+    expect(content).toContain('  - "[[인물 — 김가원]]"');
     expect(content).toContain('# 3장 — 안산 정착 (초안)');
   });
 
   it('renders each section prose with a 근거 line and surfaces flags', () => {
     const content = buildDraftNoteContent('3장', '3장', sections);
-    expect(content).toContain('> 근거: [[비트 — 안산역 도착]] · [[인물 — 김올가]]');
+    expect(content).toContain('> 근거: [[비트 — 안산역 도착]] · [[인물 — 김가원]]');
     expect(content).toContain('> ⚠️ 비트·카드에 없는 연도(1945) — 사실 확인 필요');
   });
 });

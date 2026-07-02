@@ -10,8 +10,8 @@ import {
 const baseInput = (overrides: Partial<ReviseInput> = {}): ReviseInput => ({
   chapterTitle: '3장 — 안산 정착',
   sections: [
-    { prose: '김올가가 안산역에 내린다.', grounding: ['비트 — 안산역 도착', '인물 — 김올가'], flags: [] },
-    { prose: '1937년 강제이주를 회상한다.', grounding: ['비트 — 강제이주 회상', '인터뷰 — 김올가 20260601'], flags: ['확인 필요 메모'] }
+    { prose: '김가원가 안산역에 내린다.', grounding: ['비트 — 안산역 도착', '인물 — 김가원'], flags: [] },
+    { prose: '1937년 강제이주를 회상한다.', grounding: ['비트 — 강제이주 회상', '인터뷰 — 김가원 20260601'], flags: ['확인 필요 메모'] }
   ],
   ...overrides
 });
@@ -20,13 +20,13 @@ describe('normalizeRevisions', () => {
   it('revises each section by index and carries grounding forward', () => {
     const result = normalizeRevisions(baseInput(), {
       sections: [
-        { index: 0, prose: '김올가가 천천히 안산역 계단을 내려선다.' },
+        { index: 0, prose: '김가원가 천천히 안산역 계단을 내려선다.' },
         { index: 1, prose: '그는 화물열차의 기억을 더듬는다.' }
       ]
     });
     expect(result).toHaveLength(2);
-    expect(result[0].prose).toBe('김올가가 천천히 안산역 계단을 내려선다.');
-    expect(result[0].grounding).toEqual(['비트 — 안산역 도착', '인물 — 김올가']);
+    expect(result[0].prose).toBe('김가원가 천천히 안산역 계단을 내려선다.');
+    expect(result[0].grounding).toEqual(['비트 — 안산역 도착', '인물 — 김가원']);
   });
 
   it('carries the original draft flags into the revision', () => {
@@ -35,12 +35,12 @@ describe('normalizeRevisions', () => {
   });
 
   it('flags a year the revision introduces that is not anywhere in the draft', () => {
-    const result = normalizeRevisions(baseInput(), { sections: [{ index: 0, prose: '김올가가 1945년 안산역에 내린다.' }] });
+    const result = normalizeRevisions(baseInput(), { sections: [{ index: 0, prose: '김가원가 1945년 안산역에 내린다.' }] });
     expect(result[0].flags.some((flag) => flag.includes('1945'))).toBe(true);
   });
 
   it('does not flag a year present anywhere in the draft (chapter-level)', () => {
-    const result = normalizeRevisions(baseInput(), { sections: [{ index: 0, prose: '1937년에 김올가가 안산역에 내린다.' }] });
+    const result = normalizeRevisions(baseInput(), { sections: [{ index: 0, prose: '1937년에 김가원가 안산역에 내린다.' }] });
     expect(result[0].flags.some((flag) => flag.includes('1937'))).toBe(false);
   });
 
@@ -62,13 +62,13 @@ describe('normalizeRevisions', () => {
     const result = normalizeRevisions(baseInput(), {
       sections: [{ index: 0, prose: '첫 번째' }, { index: 0, prose: '중복' }]
     });
-    expect(result[0].prose).toBe('김올가가 안산역에 내린다.');
+    expect(result[0].prose).toBe('김가원가 안산역에 내린다.');
   });
 
   it('falls back to the originals for a malformed payload', () => {
     const result = normalizeRevisions(baseInput(), { sections: 'nope' });
     expect(result.map((section) => section.prose)).toEqual([
-      '김올가가 안산역에 내린다.',
+      '김가원가 안산역에 내린다.',
       '1937년 강제이주를 회상한다.'
     ]);
   });
@@ -77,7 +77,7 @@ describe('normalizeRevisions', () => {
 describe('revalidateRevisedSections', () => {
   it('re-flags an edited year not in the draft and preserves inherited flags', () => {
     const allowed = allowedYearsForRevision(baseInput().sections);
-    const edited = [{ prose: '김올가가 2002년 안산역에 내린다.', grounding: ['비트 — 안산역 도착'], flags: ['확인 필요 메모'] }];
+    const edited = [{ prose: '김가원가 2002년 안산역에 내린다.', grounding: ['비트 — 안산역 도착'], flags: ['확인 필요 메모'] }];
     const result = revalidateRevisedSections(edited, allowed);
     expect(result[0].flags).toContain('확인 필요 메모');
     expect(result[0].flags.some((flag) => flag.includes('2002'))).toBe(true);

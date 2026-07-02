@@ -5,7 +5,7 @@ import type { DraftSection } from '../ai/draft';
 const mk = (beatTitle: string, blocking = false): DraftSection => ({
   beatTitle,
   prose: `${beatTitle} 산문`,
-  sources: blocking ? [] : ['인물 — 김올가'],
+  sources: blocking ? [] : ['인물 — 김가원'],
   flags: [],
   blocking
 });

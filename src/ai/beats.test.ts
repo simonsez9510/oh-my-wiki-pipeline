@@ -16,8 +16,8 @@ const baseInput = (overrides: Partial<BeatInput> = {}): BeatInput => ({
   chapterTitle: '3장 — 안산 정착',
   chapterBody: '안산 정착 과정을 다룬다.',
   cards: [
-    { title: '인물 — 김올가', path: '카드/인물 — 김올가.md', summary: '1938년생 고려인 어르신.', evidence: '1938년 연해주 출생.' },
-    { title: '인터뷰 — 김올가 20260601', path: '카드/인터뷰 — 김올가 20260601.md', summary: '안산 도착 회고.', evidence: '안산에 도착했다.' },
+    { title: '인물 — 김가원', path: '카드/인물 — 김가원.md', summary: '1935년생 고려인 어르신.', evidence: '1935년 연해주 출생.' },
+    { title: '인터뷰 — 김가원 20260601', path: '카드/인터뷰 — 김가원 20260601.md', summary: '안산 도착 회고.', evidence: '안산에 도착했다.' },
     { title: '사건 — 해방', path: '카드/사건 — 해방.md', summary: '1945년 해방.', evidence: '1945년 해방되었다.' }
   ],
   ...overrides
@@ -26,10 +26,10 @@ const baseInput = (overrides: Partial<BeatInput> = {}): BeatInput => ({
 describe('normalizeBeats', () => {
   it('keeps only sources that match real card titles (whitelist grounding)', () => {
     const beats = normalizeBeats(baseInput(), {
-      beats: [{ title: '도착', line: '안산역에 내린다.', quote: '1938년 연해주 출생.', sources: ['인물 — 김올가', '없는 카드'] }]
+      beats: [{ title: '도착', line: '안산역에 내린다.', quote: '1935년 연해주 출생.', sources: ['인물 — 김가원', '없는 카드'] }]
     });
     expect(beats).toHaveLength(1);
-    expect(beats[0].sources).toEqual(['인물 — 김올가']);
+    expect(beats[0].sources).toEqual(['인물 — 김가원']);
     expect(beats[0].flags).toHaveLength(0);
   });
 
@@ -43,21 +43,21 @@ describe('normalizeBeats', () => {
 
   it('flags a year that does not appear in the cited evidence', () => {
     const beats = normalizeBeats(baseInput(), {
-      beats: [{ title: '추방', line: '1937년 강제이주가 시작된다.', quote: '1938년 연해주 출생.', sources: ['인물 — 김올가'] }]
+      beats: [{ title: '추방', line: '1937년 강제이주가 시작된다.', quote: '1935년 연해주 출생.', sources: ['인물 — 김가원'] }]
     });
     expect(beats[0].flags.some((flag) => flag.includes('1937'))).toBe(true);
   });
 
   it('only counts years from cited sources, not from uncited cards', () => {
     const beats = normalizeBeats(baseInput(), {
-      beats: [{ title: '귀환', line: '1945년 귀환한다.', quote: '1938년 연해주 출생.', sources: ['인물 — 김올가'] }]
+      beats: [{ title: '귀환', line: '1945년 귀환한다.', quote: '1935년 연해주 출생.', sources: ['인물 — 김가원'] }]
     });
     expect(beats[0].flags.some((flag) => flag.includes('1945'))).toBe(true);
   });
 
   it('does not flag a year that appears in cited card evidence', () => {
     const beats = normalizeBeats(baseInput(), {
-      beats: [{ title: '출생', line: '1938년에 태어났다.', quote: '1938년 연해주 출생.', sources: ['인물 — 김올가'] }]
+      beats: [{ title: '출생', line: '1935년에 태어났다.', quote: '1935년 연해주 출생.', sources: ['인물 — 김가원'] }]
     });
     expect(beats[0].flags).toHaveLength(0);
     expect(beats[0].blocking).toBe(false);
@@ -65,30 +65,30 @@ describe('normalizeBeats', () => {
 
   it('flags a quote that is not found in the cited evidence (possible fabrication)', () => {
     const beats = normalizeBeats(baseInput(), {
-      beats: [{ title: '날조', line: '도착한다.', quote: '카드에 없는 원문 구절', sources: ['인물 — 김올가'] }]
+      beats: [{ title: '날조', line: '도착한다.', quote: '카드에 없는 원문 구절', sources: ['인물 — 김가원'] }]
     });
     expect(beats[0].flags.some((flag) => flag.includes('지어냈을'))).toBe(true);
   });
 
   it('does not accept a quote that only appears in the chapter body, not the cited card', () => {
     const beats = normalizeBeats(baseInput(), {
-      beats: [{ title: '본문복사', line: '도착한다.', quote: '안산 정착 과정을 다룬다.', sources: ['인물 — 김올가'] }]
+      beats: [{ title: '본문복사', line: '도착한다.', quote: '안산 정착 과정을 다룬다.', sources: ['인물 — 김가원'] }]
     });
     expect(beats[0].flags.some((flag) => flag.includes('지어냈을'))).toBe(true);
   });
 
   it('flags a quote shorter than the minimum length', () => {
     const beats = normalizeBeats(baseInput(), {
-      beats: [{ title: '짧은인용', line: '도착한다.', quote: '도착', sources: ['인물 — 김올가'] }]
+      beats: [{ title: '짧은인용', line: '도착한다.', quote: '도착', sources: ['인물 — 김가원'] }]
     });
     expect(beats[0].flags.some((flag) => flag.includes('짧'))).toBe(true);
   });
 
   it('deduplicates repeated sources', () => {
     const beats = normalizeBeats(baseInput(), {
-      beats: [{ title: '도착', line: '도착한다.', quote: '1938년 연해주 출생.', sources: ['인물 — 김올가', '인물 — 김올가'] }]
+      beats: [{ title: '도착', line: '도착한다.', quote: '1935년 연해주 출생.', sources: ['인물 — 김가원', '인물 — 김가원'] }]
     });
-    expect(beats[0].sources).toEqual(['인물 — 김올가']);
+    expect(beats[0].sources).toEqual(['인물 — 김가원']);
   });
 
   it('drops malformed beats missing title or line', () => {
@@ -111,8 +111,8 @@ describe('revalidateBeats', () => {
   const beat = (overrides: Partial<Parameters<typeof revalidateBeats>[0][number]> = {}) => ({
     title: '도착',
     line: '안산역에 내린다.',
-    quote: '1938년 연해주 출생.',
-    sources: ['인물 — 김올가'],
+    quote: '1935년 연해주 출생.',
+    sources: ['인물 — 김가원'],
     flags: [],
     blocking: false,
     ...overrides
@@ -139,8 +139,8 @@ describe('selectSavableBeats (export boundary)', () => {
   const mk = (overrides: Partial<Beat> = {}): Beat => ({
     title: '도착',
     line: '안산역에 내린다.',
-    quote: '1938년 연해주 출생.',
-    sources: ['인물 — 김올가'],
+    quote: '1935년 연해주 출생.',
+    sources: ['인물 — 김가원'],
     flags: [],
     blocking: false,
     ...overrides
@@ -152,9 +152,9 @@ describe('selectSavableBeats (export boundary)', () => {
   });
 
   it('keeps only the real cards as the source set', () => {
-    const result = selectSavableBeats([mk({ sources: ['인물 — 김올가', '없는 카드'] })], cards);
+    const result = selectSavableBeats([mk({ sources: ['인물 — 김가원', '없는 카드'] })], cards);
     expect(result).toHaveLength(1);
-    expect(result[0].sourceCards.map((c) => c.title)).toEqual(['인물 — 김올가']);
+    expect(result[0].sourceCards.map((c) => c.title)).toEqual(['인물 — 김가원']);
   });
 
   it('excludes blocking and blank beats', () => {
